@@ -14,9 +14,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //      去除 AppBar 和工具栏，获得沉浸式体验,这一部分代码一定要写
-        //                        在 setContentView() 前面，不然会闪退
+        //去掉标题栏
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // 去掉任务栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mGameView = new GameView(this, null);

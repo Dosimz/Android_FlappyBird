@@ -8,8 +8,8 @@ import android.graphics.Rect;
 public class Bird {
     private static final int RISING_MAX_ANGLE = -30;
     private static final int FALLING_MAX_ANGLE = 70;
-    private static final int MAX_RISE_SPEED_Y_STANDBY = -10;
-    private static final int FALL_ACCEL_Y_STANDBY = 1;
+    private static final int MAX_RISE_SPEED_Y_STANDBY = -10; // 待命时刻向上飞的速度
+    private static final int FALL_ACCEL_Y_STANDBY = 1; // 待命时刻向下的加速的
     private static final int MAX_RISE_SPEED_Y = -80;
     private static final int FALL_ACCEL_Y = 20;
 
@@ -97,20 +97,21 @@ public class Bird {
     // 发射 单击屏幕后小鸟向上飞的过程
     public synchronized void shot(){
         mIsStandby = false;
-        mAccelY = FALL_ACCEL_Y; // 加速的向下
-        mSpeedY = MAX_RISE_SPEED_Y; // 速度向下
+        mAccelY = FALL_ACCEL_Y; // 向下的加速度
+        mSpeedY = MAX_RISE_SPEED_Y; // 速度向上
         calAngularSpeed(RISING_MAX_ANGLE); //计算角速度
     }
     // 角速度计算： 参数是从当前角速度变换至最大角度
     // 观察鸟的飞行效果，当鸟发射时，会有一个向上旋转的过程，这个旋转角度的最大值
-    // 在鸟飞行到最高点后，会朝饭方向旋转（向下）达到90度
+    // 在鸟飞行到最高点后，会朝饭方向旋转（向下）达到 70 度
     // 鸟发射至最高点的时间，可以由发射时速度除以加速度计算得到
     private void calAngularSpeed(int toAngle){
         int frameCount = 0;
+        // 在往上飞的时候
         if (mSpeedY < 0){
             frameCount = mSpeedY / (-mAccelY);
         } else {
-            frameCount = 2 * MAX_RISE_SPEED_Y / (-FALL_ACCEL_Y);
+            frameCount = 2 * MAX_RISE_SPEED_Y / (-FALL_ACCEL_Y); // 坠落的时候
         }
         mAngularSpeed = (toAngle - mRotationAngle) / frameCount;
     }
@@ -141,7 +142,7 @@ public class Bird {
                 mSpeedY += mAccelY;  // 更新速度
             } else {
                 // 在游戏状态下，需要对鸟的图片进行平移和旋转变换
-                // 先在远点，饶鸟图片的中心进行选择
+                // 先在远点，饶鸟图片的中心进行旋转
                 mMatrix.preRotate(mRotationAngle, mBound.width() / 2, mBound.height() / 2);
                 // 在对图片做平移变换
                 mMatrix.postTranslate(mBound.left, mBound.top);

@@ -143,17 +143,20 @@ public class BirdWorld {
         mPipesSkin = skins;
         return this;
     }
+
     // 设置滚动速度
-    public BirdWorld setRollingSpeed(int rollingSpeed) {
-        mRollingSpeed = rollingSpeed;
-        return this;
-    }
+//    public BirdWorld setRollingSpeed(int rollingSpeed) {
+//        mRollingSpeed = rollingSpeed;
+//        return this;
+//    }
     /*
     水管在游戏中是会不断产生的,如何高效的生成水管呢?
     创建一个水管的模板列表,事先创建所有可能形状的水管,在每次需要新水管时从模板列表中随机拿出一个,
     来设置新水管的形状.
     水管从屏幕消失了,还可以回收利用当作下一个新出现的水管。
      */
+
+    // 生成水管的模板列表
     public void genTemplatePipeList() {
         // 背景的顶部距边框的距离 + 背景的高度 / 10
         int top = mBound.top + mBound.height()/10;
@@ -199,9 +202,9 @@ public class BirdWorld {
         mIsStandby = true;
         mFrameCount = 0;
     }
-    public boolean isStandby() {
-        return mIsStandby;
-    }
+//    public boolean isStandby() {
+//        return mIsStandby;
+//    }
     public void roll() { //启动游戏时地调用,画面开始滚动
         mIsStandby = false;
         mNextPipeFrameCount = -1;
@@ -215,7 +218,7 @@ public class BirdWorld {
             int recycleFrameCount = mBound.width() / mRollingSpeed; //循环一次的帧数
             //地面帧数 （用来确定地面显示位置）
             int groundFrameCount = mFrameCount % recycleFrameCount;
-            skyLeft -= mFrameCount * mRollingSpeed / SPEED_SCALE;
+            skyLeft -= mFrameCount * mRollingSpeed / SPEED_SCALE; // 更新天空的位置
             groundLeft -= groundFrameCount * mRollingSpeed; //更新地面左边的位置
             // 绘制背景图，从左边界开始往右移动
             canvas.drawBitmap(mSkySkin, skyLeft + mBound.width(), mBound.top, null);
@@ -253,6 +256,7 @@ public class BirdWorld {
                 mFrameCount = 0;
             }
         } else {
+            // 不动的背景
             canvas.drawBitmap(mSkySkin, skyLeft, mBound.top, null);
             canvas.drawBitmap(mGroundSkin, groundLeft, mGroundTop, null);
         }

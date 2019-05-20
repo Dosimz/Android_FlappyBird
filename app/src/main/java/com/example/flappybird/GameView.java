@@ -56,7 +56,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         getHolder().addCallback(this);
         loadSoundPool();
     }
-
+    // 点击屏幕时鸟的动作
     private Rect calcBirdShotBound() {
         Bitmap birdSkin = mListBirdsSkin.get(0)[0];
         Rect bound = new Rect();
@@ -64,7 +64,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
                 getWidth() / 3 + birdSkin.getWidth() / 2, getHeight() / 2 + birdSkin.getHeight() / 2);
         return bound;
     }
-
+    // 初始化时，鸟动作
     private Rect calcBirdInitBound() {
         Bitmap birdSkin = mListBirdsSkin.get(0)[0];
         Rect bound = new Rect();
